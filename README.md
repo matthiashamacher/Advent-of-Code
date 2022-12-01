@@ -13,7 +13,7 @@ The base command will always run **both** parts of the puzzle with the **real** 
 
 If only one part should be executed the following options can be used:
 
-Part one: `-1` or `--partOne`
+Part one: `-1` or `--partOne`  
 Part two: `-2` or `--partTwo`
 
 If the command should use the example input the `-t` or `--test` option can be used.

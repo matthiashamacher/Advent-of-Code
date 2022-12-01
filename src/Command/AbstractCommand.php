@@ -9,6 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 abstract class AbstractCommand extends Command
 {
@@ -32,6 +34,16 @@ abstract class AbstractCommand extends Command
             't',
             InputOption::VALUE_NONE,
             'Run the test input'
+        )->addOption(
+            'retry',
+            'r',
+            InputOption::VALUE_NONE,
+            'Retry the last run'
+        )->addOption(
+            'commit',
+            'c',
+            InputOption::VALUE_NONE,
+            'Commit the time to complete the part'
         );
     }
 
@@ -68,16 +80,51 @@ abstract class AbstractCommand extends Command
 
         $partOne = $input->getOption('partOne');
         $partTwo = $input->getOption('partTwo');
+        $retry   = $input->getOption('retry');
+        $commit  = $input->getOption('commit');
         $full    = $partOne === false && $partTwo === false;
 
         $inputData = $this->getInputData($input->getOption('test'), $date->format('Y'));
 
+        $statsFile = sprintf(
+            '%s/../../stats/%s/day%s.json',
+            __DIR__,
+            $date->format('Y'),
+            static::DAY
+        );
+
+        $fileSystem = new Filesystem();
+        $file       = $fileSystem->readlink($statsFile);
+        $stats      = [];
+
+        if ($file !== null) {
+            $stats = json_decode($file, true);
+        }
+
         if ($partOne === true || $full === true) {
             $io->section('Part One');
+
+            $stopwatch = new Stopwatch();
+            $stopwatch->start('partOne');
+
+            $resultPartOne = $this->partOne($inputData);
+
+            $event = $stopwatch->stop('partOne');
+            $stats['partOne']['executionTime'] = $event->getDuration();
+            $stats['partOne']['memoryUsage'] = $event->getMemory();
+
+            if ($retry === true) {
+                $stats['partOne']['retries']++;
+            }
+
+            if ($commit === true) {
+                $stats['partOne']['end'] = time();
+            }
+
             $io->success(
                 sprintf(
                     'The result of part one is: %s',
-                    $this->partOne($inputData)
+                    $resultPartOne
                 )
             );
         }
@@ -86,13 +133,33 @@ abstract class AbstractCommand extends Command
 
         if ($partTwo === true || $full === true) {
             $io->section('Part Two');
+
+            $stopwatch = new Stopwatch();
+            $stopwatch->start('partTwo');
+
+            $resultPartTwo = $this->partTwo($inputData);
+
+            $event = $stopwatch->stop('partTwo');
+            $stats['partTwo']['executionTime'] = $event->getDuration();
+            $stats['partTwo']['memoryUsage'] = $event->getMemory();
+
+            if ($retry === true) {
+                $stats['partTwo']['retries']++;
+            }
+
+            if ($commit === true) {
+                $stats['partTwo']['end'] = time();
+            }
+
             $io->success(
                 sprintf(
                     'The result of part two is: %s',
-                    $this->partTwo($inputData)
+                    $resultPartTwo
                 )
             );
         }
+
+        $fileSystem->dumpFile($statsFile, json_encode($stats, JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;
     }

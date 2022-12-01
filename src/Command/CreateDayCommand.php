@@ -56,14 +56,14 @@ class CreateDayCommand extends Command
         $year     = $dateTime->format('Y');
         $date     = $dateTime->format('d.m.Y');
 
-        $filesystem = new Filesystem();
+        $fileSystem = new Filesystem();
         $commandDir = sprintf(
             'src/Command/Year%s',
             $year
         );
 
-        if ($filesystem->exists($commandDir) === false) {
-            $filesystem->mkdir($commandDir);
+        if ($fileSystem->exists($commandDir) === false) {
+            $fileSystem->mkdir($commandDir);
         }
 
         $commandFile = sprintf(
@@ -72,7 +72,7 @@ class CreateDayCommand extends Command
             $capitalizedDay
         );
 
-        if ($filesystem->exists($commandFile) === true && $input->getOption('force') === false) {
+        if ($fileSystem->exists($commandFile) === true && $input->getOption('force') === false) {
             $result = $io->ask('The file already exists. Do you want to overwrite it? [y/N]', 'n');
 
             if (strtolower($result) !== 'y') {
@@ -110,7 +110,36 @@ class Day{$capitalizedDay}Command extends AbstractCommand
 
 EOF;
 
-        $filesystem->dumpFile($commandFile, $fileContent);
+        $fileSystem->dumpFile($commandFile, $fileContent);
+
+        // Create stats file
+        $statsFile = sprintf(
+            'stats/%s/day%s.json',
+            $year,
+            $day
+        );
+
+        $stats = [
+            'start' => time(),
+            'partOne' => [
+                'executionTime' => 0,
+                'memoryUsage'   => 0,
+                'end'           => '',
+                'retries'       => 0,
+            ],
+            'partTwo' => [
+                'executionTime' => 0,
+                'memoryUsage'   => 0,
+                'end'           => '',
+                'retries'       => 0,
+            ],
+            'timeNeeded' => [
+                'partOne' => 0,
+                'partTwo' => 0,
+            ]
+        ];
+
+        $fileSystem->dumpFile($statsFile, json_encode($stats, JSON_PRETTY_PRINT));
 
         $io->success(
             sprintf(
