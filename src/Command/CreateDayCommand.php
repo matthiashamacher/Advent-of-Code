@@ -141,6 +141,21 @@ EOF;
 
         $fileSystem->dumpFile($statsFile, json_encode($stats, JSON_PRETTY_PRINT));
 
+        // Create input files
+        $testInput = sprintf(
+            'input/%s/%s/test.txt',
+            $year,
+            $day
+        );
+        $realInput = sprintf(
+            'input/%s/%s/input.txt',
+            $year,
+            $day
+        );
+
+        $fileSystem->dumpFile($testInput, '');
+        $fileSystem->dumpFile($realInput, '');
+
         $io->success(
             sprintf(
                 'The day has been created successfully. Command can be found here: %s',
