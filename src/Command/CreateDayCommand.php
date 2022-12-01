@@ -124,13 +124,13 @@ EOF;
             'partOne' => [
                 'executionTime' => 0,
                 'memoryUsage'   => 0,
-                'end'           => '',
+                'end'           => 0,
                 'retries'       => 0,
             ],
             'partTwo' => [
                 'executionTime' => 0,
                 'memoryUsage'   => 0,
-                'end'           => '',
+                'end'           => 0,
                 'retries'       => 0,
             ],
             'timeNeeded' => [

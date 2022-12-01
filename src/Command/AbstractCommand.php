@@ -72,7 +72,7 @@ abstract class AbstractCommand extends Command
 
         $io->info(
             sprintf(
-                'Please save the exmaple input (test.txt) and puzzle input (input.txt) in the folder: ../../input/%d/%d',
+                'Please save the example input (test.txt) and puzzle input (input.txt) in the folder: ../../input/%d/%d',
                 $date->format('Y'),
                 static::DAY
             )
@@ -94,10 +94,28 @@ abstract class AbstractCommand extends Command
         );
 
         $fileSystem = new Filesystem();
-        $file       = $fileSystem->readlink($statsFile);
-        $stats      = [];
+        $file       = file_get_contents($statsFile);
+        $stats      = [
+            'start'      => time(),
+            'partOne'    => [
+                'executionTime' => 0,
+                'memoryUsage'   => 0,
+                'end'           => 0,
+                'retries'       => 0,
+            ],
+            'partTwo'    => [
+                'executionTime' => 0,
+                'memoryUsage'   => 0,
+                'end'           => 0,
+                'retries'       => 0,
+            ],
+            'timeNeeded' => [
+                'partOne' => 0,
+                'partTwo' => 0,
+            ],
+        ];
 
-        if ($file !== null) {
+        if ($file !== false) {
             $stats = json_decode($file, true);
         }
 
