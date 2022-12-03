@@ -31,7 +31,8 @@ current date will be used.
 
 ## Statistics
 
-| Year | Day | Execution Time<br/>Part 1 | Memory Usage<br/>Part 1 | Time to solve<br/>Part 1 | Retries<br/>Part 1 | Execution Time<br/>Part 2 | Memory Usage<br/>Part 2 | Time to solve<br/>Part 2 | Retries<br/>Part 1 |
+| Year | Day | Execution Time<br/>Part 1 | Memory Usage<br/>Part 1 | Time to solve<br/>Part 1 | Retries<br/>Part 1 | Execution Time<br/>Part 2 | Memory Usage<br/>Part 2 | Time to solve<br/>Part 2 | Retries<br/>Part 2 |
 |------|-----|---------------------------|-------------------------|--------------------------|--------------------|---------------------------|-------------------------|--------------------------|--------------------|
 | 2022 | 1   | 0 ms                      | 0 MB                    | 0 m                      | 0                  | 0 ms                      | 8 MB                    | 0 m                      | 1                  |
 | 2022 | 2   | 0 ms                      | 20 MB                   | 7 m                      | 0                  | 0 ms                      | 8 MB                    | 10 m                     | 0                  |
+| 2022 | 3   | 0 ms                      | 8 MB                    | 11 m                     | 0                  | 0 ms                      | 8 MB                    | 3 m                      | 0                  |

@@ -81,16 +81,18 @@ class StatsCommand extends Command
         );
 
         $statsMarkdown = sprintf(
-            '| %d | %d | %s ms | %s MB | %s m | %s ms | %s MB | %s m |
+            '| %d | %d | %s ms | %s MB | %s m | %s | %s ms | %s MB | %s m | %s |
 ',
             $year,
             $day,
             $data['partOne']['executionTime'],
             (int) (($data['partOne']['memoryUsage'] / 1024) / 1024),
             (int) ($data['timeNeeded']['partOne'] / 60),
+            $data['partOne']['retries'],
             $data['partTwo']['executionTime'],
             (int) (($data['partTwo']['memoryUsage'] / 1024) / 1024),
-            (int) ($data['timeNeeded']['partTwo'] / 60)
+            (int) ($data['timeNeeded']['partTwo'] / 60),
+            $data['partTwo']['retries']
         );
 
 
