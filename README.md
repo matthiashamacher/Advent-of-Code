@@ -36,3 +36,4 @@ current date will be used.
 | 2022 | 1   | 0 ms                      | 0 MB                    | 0 m                      | 0                  | 0 ms                      | 8 MB                    | 0 m                      | 1                  |
 | 2022 | 2   | 0 ms                      | 20 MB                   | 7 m                      | 0                  | 0 ms                      | 8 MB                    | 10 m                     | 0                  |
 | 2022 | 3   | 0 ms                      | 8 MB                    | 11 m                     | 0                  | 0 ms                      | 8 MB                    | 3 m                      | 0                  |
+| 2022 | 4   | 13 ms                     | 8 MB                    | 8 m                      | 0                  | 8 ms                      | 8 MB                    | 14 m                     | 0                  |
