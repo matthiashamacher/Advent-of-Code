@@ -1,0 +1,19 @@
+{
+    "start": 1670221498,
+    "partOne": {
+        "executionTime": 0,
+        "memoryUsage": 8388608,
+        "end": 1670225466,
+        "retries": 0
+    },
+    "partTwo": {
+        "executionTime": 0,
+        "memoryUsage": 8388608,
+        "end": 1670226796,
+        "retries": 0
+    },
+    "timeNeeded": {
+        "partOne": 3968,
+        "partTwo": 1330
+    }
+}

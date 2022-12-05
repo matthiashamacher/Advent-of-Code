@@ -182,12 +182,12 @@ abstract class AbstractCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function partOne(array $input): int
+    protected function partOne(array $input): int|string
     {
         throw new RuntimeException('Part One is not yet implemented');
     }
 
-    protected function partTwo(array $input): int
+    protected function partTwo(array $input): int|string
     {
         throw new RuntimeException('Part Two is not yet implemented');
     }
