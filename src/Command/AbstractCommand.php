@@ -35,6 +35,11 @@ abstract class AbstractCommand extends Command
             InputOption::VALUE_NONE,
             'Run the test input'
         )->addOption(
+            'additional-test-input',
+            'a',
+            InputOption::VALUE_NONE,
+            'Run the additional test input'
+        )->addOption(
             'retry',
             'r',
             InputOption::VALUE_NONE,
@@ -84,7 +89,7 @@ abstract class AbstractCommand extends Command
         $commit  = $input->getOption('commit');
         $full    = $partOne === false && $partTwo === false;
 
-        $inputData = $this->getInputData($input->getOption('test'), $date->format('Y'));
+        $inputData = $this->getInputData($input->getOption('test'), $input->getOption('additional-test-input'), $date->format('Y'));
 
         $statsFile = sprintf(
             '%s/../../stats/%s/day%s.json',
@@ -192,15 +197,25 @@ abstract class AbstractCommand extends Command
         throw new RuntimeException('Part Two is not yet implemented');
     }
 
-    private function getInputData(bool $test, string $year): array
+    private function getInputData(bool $test, bool $additionalTest, string $year): array
     {
+        $filename = 'input';
+
+        if ($test === true) {
+            $filename = 'test';
+        }
+
+        if ($additionalTest === true) {
+            $filename = 'additionalTest';
+        }
+
         $input = file_get_contents(
             sprintf(
                 '%s/../../input/%d/%s/%s.txt',
                 __DIR__,
                 $year,
                 static::DAY,
-                $test === true ? 'test' : 'input'
+                $filename
             )
         );
 
