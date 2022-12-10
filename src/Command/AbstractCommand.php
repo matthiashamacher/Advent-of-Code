@@ -144,12 +144,23 @@ abstract class AbstractCommand extends Command
                 $stats['partOne']['end'] = time();
             }
 
-            $io->success(
-                sprintf(
-                    'The result of part one is: %s',
-                    $resultPartOne
-                )
-            );
+            if (is_array($resultPartOne) === true) {
+                foreach ($resultPartOne as $row) {
+                    $io->writeln(implode('', $row));
+                }
+
+                $io->newLine();
+                $io->success('The result of part one can be seen above');
+            }
+
+            if (is_array($resultPartOne) === false) {
+                $io->success(
+                    sprintf(
+                        'The result of part one is: %s',
+                        $resultPartOne
+                    )
+                );
+            }
         }
 
         $io->newLine();
@@ -174,12 +185,23 @@ abstract class AbstractCommand extends Command
                 $stats['partTwo']['end'] = time();
             }
 
-            $io->success(
-                sprintf(
-                    'The result of part two is: %s',
-                    $resultPartTwo
-                )
-            );
+            if (is_array($resultPartTwo) === true) {
+                foreach ($resultPartTwo as $row) {
+                    $io->writeln(implode('', $row));
+                }
+
+                $io->newLine();
+                $io->success('The result of part two can be seen above');
+            }
+
+            if (is_array($resultPartTwo) === false) {
+                $io->success(
+                    sprintf(
+                        'The result of part two is: %s',
+                        $resultPartTwo
+                    )
+                );
+            }
         }
 
         $fileSystem->dumpFile($statsFile, json_encode($stats, JSON_PRETTY_PRINT));
@@ -187,12 +209,12 @@ abstract class AbstractCommand extends Command
         return Command::SUCCESS;
     }
 
-    protected function partOne(array $input): int|string
+    protected function partOne(array $input): int|string|array
     {
         throw new RuntimeException('Part One is not yet implemented');
     }
 
-    protected function partTwo(array $input): int|string
+    protected function partTwo(array $input): int|string|array
     {
         throw new RuntimeException('Part Two is not yet implemented');
     }
